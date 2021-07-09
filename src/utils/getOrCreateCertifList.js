@@ -10,6 +10,7 @@ export async function getOrCreateCertifList(containerUri, fetch) {
     //finds the given dataset if available
     const certifList = await getSolidDataset(indexUrl, { fetch });
     return certifList;
+    
   } catch (error) {
     if (error.statusCode === 404) {
       //if not found, then create new dataset

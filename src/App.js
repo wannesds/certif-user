@@ -1,20 +1,23 @@
 import './App.css';
 import React, { useEffect, useState } from "react";
 import { LoginButton, LogoutButton, Text, useSession, CombinedDataProvider } from "@inrupt/solid-ui-react";
-import { getSolidDataset, getUrlAll, getThing } from "@inrupt/solid-client";
+import { getSolidDataset, getUrlAll, getThing, getThingAll } from "@inrupt/solid-client";
 import { getOrCreateCertifList } from "./utils/getOrCreateCertifList";
+import StoredList from './components/storedList';
+import QueList from './components/queList';
 
 const STORAGE_PREDICATE = "http://www.w3.org/ns/pim/space#storage";
 
 const authOptions = {
-  clientName: "Certif-create App",
+  clientName: "Certif-User App",
 };
 
 function App() {
 
   const { session } = useSession();
   const [oidcIssuer, setOidcIssuer] = useState("");
-  const [certifList, setCertifList] = useState("");
+  const [certifListStored, setCertifListStored] = useState('');
+  const [certifListQue, setCertifListQue] = useState('');
 
   const handleChange = (event) => {
     setOidcIssuer(event.target.value);
@@ -23,6 +26,15 @@ function App() {
   useEffect(() => {
     if (!session || !session.info.isLoggedIn) return;
     (async () => {
+      //could be put in own file (getQueList)
+      const issuerUrl = "https://ksbissuer.solidcommunity.net/certificates-issued/index.ttl"
+      const certifList = await getSolidDataset(issuerUrl, { 
+        fetch : session.fetch 
+      });
+      console.log("certifListQue : ", certifList)
+      setCertifListQue(certifList)
+      //not working can't see/access things in dataset
+
       const profileDataset = await getSolidDataset(session.info.webId, {
         fetch: session.fetch,
       });
@@ -31,33 +43,11 @@ function App() {
       const pod = podsUrls[0];
       const containerUri = `${pod}certificates/`;
       const list = await getOrCreateCertifList(containerUri, session.fetch);
-      setCertifList(list);
+      setCertifListStored(list);
 
+      //const resQueList = await GetQueList(session.fetch)
       
-        // const Web3 = require('web3');
-        // const web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
-        // // Modern dapp browsers...
-        // if (window.ethereum) {
-        //     window.web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
-        //     try {
-        //         // Request account access if needed
-        //         await window.ethereum.enable();
-        //         // Acccounts now exposed
-    
-        //     } catch (error) {
-        //         // User denied account access...
-        //     }
-        // }
-        // // Legacy dapp browsers...
-        // else if (window.web3) {
-        //     window.web3 = new Web3(web3.currentProvider);
-        //     // Acccounts always exposed
-        // }
-        // // Non-dapp browsers...
-        // else {
-        //     console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
-        //}
-    
+      
 
     })();
 
@@ -86,7 +76,8 @@ function App() {
               <LogoutButton/>
           </div>
           <section>
-            {/* <QueList certifList={certifList} setCertifList={setCertifList}/> */}
+            <QueList certifListQue={certifListQue}/> 
+            <StoredList certifListStored={certifListStored}/>
           </section>
         </CombinedDataProvider>
       ) : (  //if not logged in then
