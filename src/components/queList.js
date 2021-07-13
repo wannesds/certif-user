@@ -3,65 +3,76 @@ import {
     getThingAll,
     getUrl,
     getDatetime,
+    getStringNoLocale,
+    getStringByLocaleAll,
 } from "@inrupt/solid-client";
-import { Table, TableColumn } from "@inrupt/solid-ui-react";
+import QueItem from './queItem';
+import CheckIfValid from '../utils/checkIfValid';
+//import { CheckIfStored } from '../utils/checkIfStored';
 
 const TEXT_PREDICATE = "http://schema.org/text";
 const CREATED_PREDICATE = "http://www.w3.org/2002/12/cal/ical#created";
 const SHA1_PREDICATE = "http://xmlns.com/foaf/0.1/sha1";
-const PERSON_PREDICATE = "http://xmlns.com/foaf/0.1/Person";
-const TYPE_PREDICATE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
-const CERTIFICATION_CLASS = "http://data.europa.eu/snb/credential/e34929035b";
-const STRING = "http://www.w3.org/2001/XMLSchema#string;"
 
 
-function QueList({certifListQue}){
-    console.log("certifListQue", certifListQue)
+function QueList({certifListStored, setCertifListStored, certifListQue, setCertifListQue, session}){
+    const queThings = certifListQue;
+    const storedThings = certifListStored ? getThingAll(certifListStored) : [];
 
+    const storedThingsHashes = storedThings.map((thing) => {return getStringNoLocale(thing, SHA1_PREDICATE)})
 
-    const certifThings = certifListQue ? getThingAll(certifListQue) : [];
+    let certifThings = [];
+
+    //try incase our que is empty, without the try an error will be given sometimes on empty que
+    try {
+        certifThings = queThings.filter((thing) => {
+            if(true !== storedThingsHashes.includes(getStringNoLocale(thing, SHA1_PREDICATE)) ){
+                return thing;
+            }
+        }) 
+        console.log("queList certifThings", certifThings)
+    } catch (error) {
+        console.log("queList couldn't check certifs against webId")
+    }
+    console.log("queList queThings", queThings )
+
     certifThings.sort((a, b) => {
         return (
           getDatetime(a, CREATED_PREDICATE) - getDatetime(b, CREATED_PREDICATE)
         );
     });
-
-    const thingsArray = certifThings
-        //filters for todo-type predicates, (don't think this is needed in current version) but it can be an extra check
-        .filter((t) => getUrl(t, TYPE_PREDICATE) === CERTIFICATION_CLASS)
-        .map((t) => {
-            return { dataset: certifListQue, thing: t }; 
-        
-        });
-
+    
     return(
         <div className="table-container">
             <span className="tasks-message">
-            There are {certifThings.length} certificates waiting for you.
+            There are {certifThings.length} certificates ready to be stored.
             </span>
-            <Table className="table" things={thingsArray}>
-                <TableColumn 
-                    property={TEXT_PREDICATE} 
-                    header="Certificate" 
-                    sortable
-                />
-                <TableColumn 
-                    property={PERSON_PREDICATE} 
-                    header="WebID" 
-                    sortable
-                />
-                <TableColumn
-                    property={SHA1_PREDICATE}
-                    header="Validation Hash"
-                />
-                <TableColumn
-                    property={CREATED_PREDICATE}
-                    dataType="datetime"
-                    header="Created At"
-                    body={({ value }) => value.toDateString()}
-                    sortable
-                />
-            </Table>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>Certificate</th>
+                        <th>WebID</th>
+                        <th>Validation Hash</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    { !certifThings ? <span>no</span>
+                        : certifThings.map( (item, index) => 
+                            <QueItem 
+                                id= {index}
+                                thing={item}
+                                certifListStored={certifListStored}
+                                setCertifListStored={setCertifListStored}
+                                certifListQue={certifListQue}
+                                setCertifListQue={setCertifListQue}
+                                session={session}
+                                key={index}
+                            />
+                        )
+                    }
+                </tbody>
+            </table>
         </div>
     );
 }

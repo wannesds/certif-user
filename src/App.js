@@ -1,12 +1,15 @@
 import './App.css';
 import React, { useEffect, useState } from "react";
 import { LoginButton, LogoutButton, Text, useSession, CombinedDataProvider } from "@inrupt/solid-ui-react";
-import { getSolidDataset, getUrlAll, getThing, getThingAll } from "@inrupt/solid-client";
+import { getSolidDataset, getUrlAll, getThing, getThingAll, getStringNoLocale } from "@inrupt/solid-client";
 import { getOrCreateCertifList } from "./utils/getOrCreateCertifList";
 import StoredList from './components/storedList';
 import QueList from './components/queList';
+import AccessForm from './components/accessForm';
 
 const STORAGE_PREDICATE = "http://www.w3.org/ns/pim/space#storage";
+const PERSON_PREDICATE = "http://xmlns.com/foaf/0.1/Person";
+
 
 const authOptions = {
   clientName: "Certif-User App",
@@ -26,15 +29,35 @@ function App() {
   useEffect(() => {
     if (!session || !session.info.isLoggedIn) return;
     (async () => {
-      //could be put in own file (getQueList)
+
+      //fetches que'd certifications
+      //this could be changed in a textfield where user fills in the issuer WebId
       const issuerUrl = "https://ksbissuer.solidcommunity.net/certificates-issued/index.ttl"
-      const certifList = await getSolidDataset(issuerUrl, { 
+      const rawCertifList = await getSolidDataset(issuerUrl, { 
         fetch : session.fetch 
       });
-      console.log("certifListQue : ", certifList)
-      setCertifListQue(certifList)
-      //not working can't see/access things in dataset
 
+      //checks que'd certifs for correct user webId, 
+      //could make own file. OR We could do this in queList like the 'check for stored certifs', but
+      //we put it here because this is more sensitive data that should be put in back-end later, while
+      //the other check doesn't need to be in back-end. 
+      //and so making the distinct seperation between these 2 checks.
+      //incase we create a turtle file for each user from the issuerapp then we don't need to filter these
+      const queThings = rawCertifList ? getThingAll(rawCertifList) : [];
+      try { //try incase our que is empty
+        const certifThings = queThings.filter((thing) => {
+          if(session.info.webId === getStringNoLocale(thing, PERSON_PREDICATE) ){
+              return thing;
+          }
+        })
+        console.log("certifThings", certifThings)
+        setCertifListQue(certifThings)
+      } catch (error) {
+        console.log("couldn't check certifs against webId", error)
+      }
+      //a loading screen could be put to prevent the inital filtering progress from showing on screen with flashes
+      
+      //fetches stored certifications
       const profileDataset = await getSolidDataset(session.info.webId, {
         fetch: session.fetch,
       });
@@ -43,16 +66,10 @@ function App() {
       const pod = podsUrls[0];
       const containerUri = `${pod}certificates/`;
       const list = await getOrCreateCertifList(containerUri, session.fetch);
-      setCertifListStored(list);
-
-      //const resQueList = await GetQueList(session.fetch)
-      
-      
-
+      setCertifListStored(list);      
+    
     })();
 
-    
-    
   }, [session, session.info.isLoggedIn]);
 
   
@@ -76,7 +93,17 @@ function App() {
               <LogoutButton/>
           </div>
           <section>
-            <QueList certifListQue={certifListQue}/> 
+            <AccessForm
+              certifListStored={certifListStored}
+              session={session}
+            />
+            <QueList 
+              certifListStored={certifListStored} 
+              setCertifListStored={setCertifListStored} 
+              certifListQue={certifListQue} 
+              setCertifListQue={setCertifListQue}
+              session={session}
+            /> 
             <StoredList certifListStored={certifListStored}/>
           </section>
         </CombinedDataProvider>
