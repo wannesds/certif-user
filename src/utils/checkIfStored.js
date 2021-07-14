@@ -1,4 +1,3 @@
-import CreateHash  from './createHash';
 
 //const SHA1_PREDICATE = "http://xmlns.com/foaf/0.1/sha1";
 

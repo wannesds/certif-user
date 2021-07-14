@@ -12,7 +12,7 @@ const PERSON_PREDICATE = "http://xmlns.com/foaf/0.1/Person";
 
 
 const authOptions = {
-  clientName: "Certif-User App",
+  clientName: "certif-user App",
 };
 
 function App() {
