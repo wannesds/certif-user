@@ -6,13 +6,6 @@ import {
 } from "@inrupt/solid-client";
 import StoredItem from './storedItem';
 
-const TEXT_PREDICATE = "http://schema.org/text";
-const CREATED_PREDICATE = "http://www.w3.org/2002/12/cal/ical#created";
-const SHA1_PREDICATE = "http://xmlns.com/foaf/0.1/sha1";
-const PERSON_PREDICATE = "http://xmlns.com/foaf/0.1/Person";
-const TYPE_PREDICATE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
-const CERTIFICATION_CLASS = "http://data.europa.eu/snb/credential/e34929035b";
-
 function StoredList({certifListStored}){
     
     console.log(certifListStored)
@@ -35,20 +28,20 @@ function StoredList({certifListStored}){
     return(
         <div className="table-container">
             <span className="tasks-message">
-            There are {certifThings.length} certificates on your Pod.
+            There {certifThings.length === 1 ? "is" : "are"} {certifThings.length} certificate{certifThings.length === 1 ? "" : "s"} on your Pod.
             </span>
             <table className="table">
                 <thead>
                     <tr>
                         <th>Certificate</th>
-                        <th>Validation Hash</th>
+                        <th>WebID</th>
+                        <th>Created</th>
                     </tr>
                 </thead>
                 <tbody>
                     { !certifThings ? <span>no</span>
                         : certifThings.map( (item, index) => 
                             <StoredItem 
-                                id= {index}
                                 thing={item}
                                 key={index}
                             />

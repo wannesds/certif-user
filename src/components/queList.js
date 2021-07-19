@@ -7,7 +7,7 @@ import {
     getStringByLocaleAll,
 } from "@inrupt/solid-client";
 import QueItem from './queItem';
-import CheckIfValid from '../utils/checkIfValid';
+//import CheckIfValid from '../utils/checkIfValid';
 //import { CheckIfStored } from '../utils/checkIfStored';
 
 const TEXT_PREDICATE = "http://schema.org/text";
@@ -45,14 +45,13 @@ function QueList({certifListStored, setCertifListStored, certifListQue, setCerti
     return(
         <div className="table-container">
             <span className="tasks-message">
-            There are {certifThings.length} certificates ready to be stored.
+            There {certifThings.length === 1 ? "is" : "are"} {certifThings.length} certificate{certifThings.length === 1 ? "" : "s"} ready to be stored.
             </span>
             <table className="table">
                 <thead>
                     <tr>
                         <th>Certificate</th>
                         <th>WebID</th>
-                        <th>Validation Hash</th>
                         <th>Created</th>
                     </tr>
                 </thead>
@@ -60,7 +59,6 @@ function QueList({certifListStored, setCertifListStored, certifListQue, setCerti
                     { !certifThings ? <span>no</span>
                         : certifThings.map( (item, index) => 
                             <QueItem 
-                                id= {index}
                                 thing={item}
                                 certifListStored={certifListStored}
                                 setCertifListStored={setCertifListStored}

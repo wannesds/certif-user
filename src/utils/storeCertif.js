@@ -25,10 +25,11 @@ export async function StoreCertif(thing, certifListStored, setCertifListStored, 
     const indexUrl = getSourceUrl(certifListStored);
     //creates a thing and adds triples to it each time needed using solid-client functions
     const certifWithText = addStringNoLocale(createThing(), TEXT_PREDICATE, getStringNoLocale(thing, TEXT_PREDICATE));
-    //const certifWithDate = addDatetime(certifWithText, CREATED_PREDICATE, getDatetime(thing, CREATED_PREDICATE)() );
-    const certifWithHash = addStringNoLocale(certifWithText, SHA1_PREDICATE, getStringNoLocale(thing, SHA1_PREDICATE));
+    const certifWithDate = addDatetime(certifWithText, CREATED_PREDICATE, getDatetime(thing, CREATED_PREDICATE) );
+    const certifWithHash = addStringNoLocale(certifWithDate, SHA1_PREDICATE, getStringNoLocale(thing, SHA1_PREDICATE));
+    const certifWithPerson = addStringNoLocale(certifWithHash, PERSON_PREDICATE, getStringNoLocale(thing, PERSON_PREDICATE));
     //adds correct class
-     const certifWithType = addUrl(certifWithHash, TYPE_PREDICATE, CERTIFICATION_CLASS);
+     const certifWithType = addUrl(certifWithPerson, TYPE_PREDICATE, CERTIFICATION_CLASS);
     //updates certification list with newly added thing
     const updatedCertifList = setThing(certifListStored, certifWithType);
     //saves dataset on Pod
