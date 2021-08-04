@@ -15,7 +15,7 @@ function AccessForm({certifListStored, session}) {
   };
 
   const handleChange = (e) => {
-    setValidatorWebId(e.target.value) 
+    setValidatorWebId(`https://${e.target.value}/profile/card#me`) 
   };
 
   return (

@@ -39,7 +39,7 @@ function App() {
       const profileThing = getThing(profileDataset, session.info.webId);
       const podsUrls = getUrlAll(profileThing, STORAGE_PREDICATE);
       const pod = podsUrls[0];
-      const containerUri = `${pod}certificates/`;
+      const containerUri = `${pod}certificates2/`;
       const list = await getOrCreateCertifList(containerUri, session.fetch);
       setCertifListStored(list);      
     
@@ -100,7 +100,7 @@ function App() {
             <IssuerForm
               setIssuerWebId={setIssuerWebId}
             />
-            <span>{ !issuerWebId ? null : `Certificates from : ${issuerWebId} `}</span>
+            <span>{ !issuerWebId ? 'Fill in an Issuer' : `Certificates from : ${issuerWebId} `}</span>
             
             <QueList 
               certifListStored={certifListStored} 
@@ -113,7 +113,9 @@ function App() {
               certifListStored={certifListStored}
               session={session}
             />
-            <StoredList certifListStored={certifListStored}/>
+            <StoredList 
+              certifListStored={certifListStored}
+            />
           </div>
         </CombinedDataProvider>
       ) : (  //if not logged in then
