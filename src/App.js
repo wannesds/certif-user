@@ -39,14 +39,15 @@ function App() {
       const profileThing = getThing(profileDataset, session.info.webId);
       const podsUrls = getUrlAll(profileThing, STORAGE_PREDICATE);
       const pod = podsUrls[0];
-      const containerUri = `${pod}certificates2/`;
+      const containerUri = `${pod}certificates/`;
       const list = await getOrCreateCertifList(containerUri, session.fetch);
       setCertifListStored(list);      
     
       //fetches que'd certifications
       //this could be changed in a textfield where user fills in the issuer WebId
       
-      const issuerUrl = `https://${issuerWebId}/certificates-issued/index.ttl`
+      const issuerUrl = `https://${issuerWebId}/certificates-issued/${pod.split("/")[2]}.ttl`
+      console.log("issuerUrl", issuerUrl)
       const rawCertifList = await getSolidDataset(issuerUrl, { 
         fetch : session.fetch 
       });
