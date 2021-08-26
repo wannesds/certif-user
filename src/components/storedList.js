@@ -1,16 +1,27 @@
 import React from 'react';
 import { 
-    getThingAll, 
+    getThing, 
     getUrl, 
+    getStringNoLocale,
     getDatetime,
 } from "@inrupt/solid-client";
-import StoredItem from './storedItem';
+// import StoredItem from './storedItem';
+import AccessForm from './accessForm';
 
-function StoredList({certifListStored}){
+const TEXT_PREDICATE = "http://schema.org/text";
+const PERSON_PREDICATE = "http://xmlns.com/foaf/0.1/Person";
+const CREATED_PREDICATE = "http://www.w3.org/2002/12/cal/ical#created";
+
+
+function StoredList({certifListStored, session}){
     
-    console.log(certifListStored)
+    console.log("storedList", certifListStored)
 
-    const certifThings = certifListStored ? getThingAll(certifListStored) : [];
+    const certifThings = !certifListStored ? [] : certifListStored
+       console.log("certifThings", certifThings)
+    // const certifThings = certifList.map((StoredItem => {
+    //     return getThingAll(item)
+    // })
     // certifThings.sort((a, b) => {
     //     return (
     //       getDatetime(a, CREATED_PREDICATE) - getDatetime(b, CREATED_PREDICATE)
@@ -24,31 +35,31 @@ function StoredList({certifListStored}){
     //         return { dataset: certifListStored, thing: t }; 
         
     //     });
+
+    // const date = getDatetime(thing, CREATED_PREDICATE);
+    // const certifId = getStringNoLocale(thing, TEXT_PREDICATE);
+    // const webId = getStringNoLocale(thing, PERSON_PREDICATE);
    
     return(
-        <div className="table-container">
-            <span className="tasks-message">
+        <div className="table-container holder-container">
+            <span className="holder-count">
             There {certifThings.length === 1 ? "is" : "are"} {certifThings.length} certificate{certifThings.length === 1 ? "" : "s"} on your Pod.
             </span>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>Certificate</th>
-                        <th>WebID</th>
-                        <th>Created</th>
-                    </tr>
-                </thead>
-                <tbody>
+                <div className="table holder-list">
                     { !certifThings ? <span>no</span>
-                        : certifThings.map( (item, index) => 
-                            <StoredItem 
-                                thing={item}
-                                key={index}
-                            />
+                        : certifThings.map( (thing) => 
+                             //<div>{getStringNoLocale(thing, PERSON_PREDICATE)}</div> ,
+                            <div className="certificate">
+                                {thing.url}
+                                <AccessForm
+                                    url={thing.url}
+                                    session={session}
+                                />
+                            </div> 
+
                         )
                     }
-                </tbody>
-            </table>
+                </div>
         </div>
     );
 }

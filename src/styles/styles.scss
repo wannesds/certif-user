@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
+
+$Inconsolata: 'Inconsolata', monospace;
+$Roboto: 'Roboto', sans-serif;
+
+$white1: #fbfdfd;
+$white2: #e0e6e4;
+$black1: rgb(22, 22, 22);
+
+$blue1: #4c668d;
+$blue2: #3e4f7e;
+$blue3: #6a87b3;
+
+$cyan1:#367063;
+$cyan2:#6dc9b9d5;
+
+$border1: $cyan1;
+
+@mixin gradient1 {
+background: linear-gradient(160deg, $cyan1 0%, $cyan2 100%);
+}
+
+
+.app-container {
+    font-family: $Roboto;
+    background-color: $white1;
+    min-height: 100vh;
+    color: $black1; 
+}
+.header {
+    background-color: $blue1;
+    @include gradient1;
+    //color: $white1;
+    display: flex;
+    justify-content:center;
+    padding: 2vh 0;
+    font-size: larger;
+    span {
+        margin-right: 4px;
+    }
+    .logout-button {
+        display: inline-block;
+        background-color:red;
+    }
+}
+
+.content {
+    //background-color: rgba(255, 255, 0, 0.705);
+    padding: 0 2em;
+    min-height: 70vh;
+    h3 {
+        margin: 0.5em 0;
+    }
+}
+.local-content{
+    //background-color:rgba(128, 0, 128, 0.877);
+    min-height: 15vh;
+    display: flex;
+    flex-wrap: wrap;
+    //justify-content:space-between;
+    border: $border1 solid 2px;
+    padding: 0.5em;
+    background-color: $white2;
+}
+.solid-content {
+    //background-color:rgba(55, 190, 190, 0.856);
+    border: $border1 solid 2px;
+    display: flex;
+    flex-wrap: wrap;
+    //justify-content: space-between;
+    min-height: 54vh;
+    padding: 0.5em;
+    background-color: $white2;
+
+}
+.table-container, form{
+    min-width: 25vw;
+    //background-color: rgba(0, 0, 255, 0.623);
+}
+.certif-list {
+    border-left: $border1 solid 2px;
+    padding-left: 1em;
+}
+.certificate { //new
+    border: $border1 solid 2px;
+    padding: 0.5em ;
+    margin: 0.5em 0;
+    display: flex;
+    justify-content: space-between;
+}
+.certif-list-message {
+    span {
+        display: flex;
+        h4 {
+            margin: 0 0.5em 0 0;
+        }
+    }
+}
+.form {
+    //background-color: red;
+    width: 16em;
+    label {
+       display: flex;
+       flex-direction: column;
+    }
+    input {
+        width: 16em;
+        margin-top: 0.5em;
+    }
+}
+.add-button {
+    width: 16em;
+    height: 2.5em;
+    margin-top: 1em;
+}
+.holder-container {
+    //background-color:rgba(255, 0, 0, 0.527);
+}
+.holder-list {
+    max-height:50vh;
+    overflow-y: scroll;
+    //background-color:red;
+}
+.holder {
+    //background-color: $blue;
+    //color: $border;
+    padding: 0.3em;
+    border: solid 0.1em $border1;
+    border-top:none;
+    border-radius: 0em;
+    width: 90%;
+    @include gradient1;
+    &:hover {
+        cursor: pointer;
+        //background-color: $blue3;
+        color: $white1;
+        //padding: 0.05em;
+        img {
+            opacity: 80%;
+        }
+    }
+    img{
+        width: 20px;
+        float:right;
+        opacity: 60%;
+    }
+    
+}

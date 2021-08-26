@@ -1,13 +1,13 @@
 import React, {useState } from "react";
 import {AddReadAccess} from '../utils/addReadAccess';
 
-function AccessForm({certifListStored, session}) {
+function AccessForm({url, session}) {
   const [validatorWebId, setValidatorWebId] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     try {
-      AddReadAccess(certifListStored, session, validatorWebId)
+      AddReadAccess(url, session, validatorWebId)
     } catch (error) {
       console.log("calling AddReadAccess failed", error)
     }
@@ -19,7 +19,7 @@ function AccessForm({certifListStored, session}) {
   };
 
   return (
-      <form onSubmit={handleSubmit} className="validator-access-form">
+      <form onSubmit={handleSubmit} className="access-form">
         <label htmlFor="Validator WebID">
           <input
             id="webID-input"
@@ -28,7 +28,7 @@ function AccessForm({certifListStored, session}) {
             onChange={handleChange}
           />
         </label>
-        <button type="submit" className="add-button">
+        <button type="submit" className="button">
           give read access
         </button>
       </form>

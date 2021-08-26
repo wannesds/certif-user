@@ -17,8 +17,9 @@ const SHA1_PREDICATE = "http://xmlns.com/foaf/0.1/sha1";
 
 function QueList({certifListStored, setCertifListStored, certifListQue, setCertifListQue, session}){
     const queThings = certifListQue;
-    const storedThings = certifListStored ? getThingAll(certifListStored) : [];
-
+    console.log(certifListStored)
+    const storedThings = certifListStored ? certifListStored : [];
+  
     const storedThingsHashes = storedThings.map((thing) => {return getStringNoLocale(thing, SHA1_PREDICATE)})
 
     let certifThings = [];

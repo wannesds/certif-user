@@ -13,12 +13,13 @@ function StoredItem({thing}){
     const date = getDatetime(thing, CREATED_PREDICATE);
     const certifId = getStringNoLocale(thing, TEXT_PREDICATE);
     const webId = getStringNoLocale(thing, PERSON_PREDICATE);
-
+    console.log('thing', thing)
     return(
         <tr>
             <td>{certifId}</td>
             <td>{webId}</td>
-            <td>{date.toDateString()}</td>
+            <td>{date}</td>
+            {/* date.toDateString() */}
         </tr>
     );
 }

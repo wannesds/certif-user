@@ -11,25 +11,18 @@ import {
     createAcl,
     createAclFromFallbackAcl
   } from "@inrupt/solid-client";
+//   import {getPodUrl} from '../utils/getPodUrl';
 
   
-export async function AddReadAccess(certifListStored, session, validatorWebId){
-    const STORAGE_PREDICATE = "http://www.w3.org/ns/pim/space#storage";
+export async function AddReadAccess(url, session, validatorWebId){
 
     try {
-        const profileDataset = await getSolidDataset(session.info.webId, {
-            fetch: session.fetch,
-        });
-          const profileThing = getThing(profileDataset, session.info.webId);
-          const podsUrls = getUrlAll(profileThing, STORAGE_PREDICATE);
-          const pod = podsUrls[0];
-          //above to be removed to just a pod parameter given?
-          const containerUri = `${pod}certificates2/index.ttl`
-        //had to do these steps to get correct link, might be able to get it from session tho
+        // const pod = getPodUrl(session);
+        // const containerUri = `${pod}certificates-owned/index.ttl`
         
-        console.log('urltest', containerUri, certifListStored)
+        console.log('addAccess-urlTest : ', url)
         // Fetch the SolidDataset and its associated ACLs, if available:
-        const myDataset = await getSolidDatasetWithAcl(containerUri, {
+        const myDataset = await getSolidDatasetWithAcl(url, {
             fetch: session.fetch
         }); 
         let resourceAcl = "";
@@ -60,6 +53,7 @@ export async function AddReadAccess(certifListStored, session, validatorWebId){
             fetch: session.fetch
         });
         console.log("AddReadAccess should have worked")
+        alert(`Read access has been given to ${validatorWebId}`)
        
     } catch {
         console.log("AddReadAccess has failed")

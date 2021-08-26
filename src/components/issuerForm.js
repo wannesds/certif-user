@@ -15,9 +15,9 @@ function IssuerForm({setIssuerWebId}) {
     };
 
   return (
-      <form className="user-read-form">
+      <form className="form">
         <label htmlFor="User WebID">
-            <span>Ex: ksbissuer.solidcommunity.net</span>
+          <span>Fill in an Issuer</span>
           <input
             id="webID-input"
             type="text"
