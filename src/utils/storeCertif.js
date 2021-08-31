@@ -13,7 +13,7 @@ import {
     getUrlAll,
   } from "@inrupt/solid-client";
 import {createCertifFile} from './createCertifFile';
-import {getOrCreateCertifList} from './getOrCreateCertifList';
+// import {getOrCreateCertifList} from './getOrCreateCertifList';
 import { getPodUrl } from '../utils/getPodUrl';
 
 
@@ -23,7 +23,7 @@ const SHA1_PREDICATE = "http://xmlns.com/foaf/0.1/sha1";
 const PERSON_PREDICATE = "http://xmlns.com/foaf/0.1/Person";
 const TYPE_PREDICATE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 const CERTIFICATION_CLASS = "http://data.europa.eu/snb/credential/e34929035b";
-const STORAGE_PREDICATE = "http://www.w3.org/ns/pim/space#storage";
+// const STORAGE_PREDICATE = "http://www.w3.org/ns/pim/space#storage";
 
 
 

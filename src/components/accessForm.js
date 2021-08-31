@@ -1,13 +1,18 @@
 import React, {useState } from "react";
-import {AddReadAccess} from '../utils/addReadAccess';
+import { AddReadAccess } from '../utils/addReadAccess';
+import { getPodUrl } from '../utils/getPodUrl';
 
 function AccessForm({url, session}) {
   const [validatorWebId, setValidatorWebId] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      //adds access controls to given uri & webid
       AddReadAccess(url, session, validatorWebId)
+      //gives also needed read-access to the container
+      const pod = await getPodUrl(session)
+      AddReadAccess(`${pod}certificates-owned/`, session, validatorWebId)
     } catch (error) {
       console.log("calling AddReadAccess failed", error)
     }
@@ -25,6 +30,7 @@ function AccessForm({url, session}) {
             id="webID-input"
             type="text"
             //value={todoText}
+            placeholder='ksbvalidator.solidcommunity.net'
             onChange={handleChange}
           />
         </label>

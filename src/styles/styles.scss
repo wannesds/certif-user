@@ -60,12 +60,14 @@ background: linear-gradient(160deg, $cyan1 0%, $cyan2 100%);
     flex-wrap: wrap;
     //justify-content:space-between;
     border: $border1 solid 2px;
+    border-radius: 8px; //!!new
     padding: 0.5em;
     background-color: $white2;
 }
 .solid-content {
     //background-color:rgba(55, 190, 190, 0.856);
     border: $border1 solid 2px;
+    border-radius: 8px; //!!new
     display: flex;
     flex-wrap: wrap;
     //justify-content: space-between;
@@ -82,8 +84,9 @@ background: linear-gradient(160deg, $cyan1 0%, $cyan2 100%);
     border-left: $border1 solid 2px;
     padding-left: 1em;
 }
-.certificate { //new
+.certificate { //!!new
     border: $border1 solid 2px;
+    border-radius: 8px;
     padding: 0.5em ;
     margin: 0.5em 0;
     display: flex;
@@ -109,6 +112,11 @@ background: linear-gradient(160deg, $cyan1 0%, $cyan2 100%);
         margin-top: 0.5em;
     }
 }
+.access-form { //!!new
+    input {
+        width: 15em;
+    }
+}
 .add-button {
     width: 16em;
     height: 2.5em;
@@ -128,7 +136,6 @@ background: linear-gradient(160deg, $cyan1 0%, $cyan2 100%);
     padding: 0.3em;
     border: solid 0.1em $border1;
     border-top:none;
-    border-radius: 0em;
     width: 90%;
     @include gradient1;
     &:hover {

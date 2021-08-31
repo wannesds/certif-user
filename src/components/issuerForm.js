@@ -17,11 +17,12 @@ function IssuerForm({setIssuerWebId}) {
   return (
       <form className="form">
         <label htmlFor="User WebID">
-          <span>Fill in an Issuer</span>
+          <span>Fill in an issuer webID</span>
           <input
             id="webID-input"
             type="text"
             //value={todoText}
+            placeholder='ksbissuer.solidcommunity.net'
             onChange={handleChange}
           />
         </label>

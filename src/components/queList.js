@@ -20,7 +20,9 @@ function QueList({certifListStored, setCertifListStored, certifListQue, setCerti
     console.log(certifListStored)
     const storedThings = certifListStored ? certifListStored : [];
   
-    const storedThingsHashes = storedThings.map((thing) => {return getStringNoLocale(thing, SHA1_PREDICATE)})
+    const storedThingsHashes = storedThings.map((thing) => {
+        return getStringNoLocale(thing, SHA1_PREDICATE);
+    })
 
     let certifThings = [];
 
