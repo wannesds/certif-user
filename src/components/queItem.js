@@ -28,7 +28,7 @@ function QueItem({thing, certifListStored, setCertifListStored, session}){
     return(
         <tr>
             <td>{certifId}</td>
-            <td>{webId}</td>
+            {/* <td>{webId}</td> */}
             <td>{date.toDateString()}</td>
             <button onClick={handleStoreCertif}>Store to Pod</button>
         </tr>
