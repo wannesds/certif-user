@@ -59,7 +59,7 @@ function QueList({certifListStored, setCertifListStored, certifListQue, setCerti
                     </tr>
                 </thead>
                 <tbody>
-                    { !certifThings.length > 0 ? <span>no</span>
+                    { !certifThings.length > 0 ? null
                         : certifThings.map( (item, index) => 
                             <QueItem 
                                 thing={item}

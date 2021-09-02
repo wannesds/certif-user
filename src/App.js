@@ -77,7 +77,7 @@ function App() {
       //a loading screen could be put to prevent the inital filtering progress from showing on screen with flashes
     })();
 
-  }, [session, session.info.isLoggedIn, issuerWebId]);
+  }, [session, session.info.isLoggedIn, issuerWebId, certifListQue]);
 
   
 

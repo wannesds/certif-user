@@ -46,7 +46,7 @@ function StoredList({certifListStored, session}){
             There {certifThings.length === 1 ? "is" : "are"} {certifThings.length} certificate{certifThings.length === 1 ? "" : "s"} on your Pod.
             </span>
                 <div className="table holder-list">
-                    { !certifThings.length > 0 ? <span>no</span>
+                    { !certifThings.length > 0 ? null
                         : certifThings.map( (thing) => 
                              //<div>{getStringNoLocale(thing, PERSON_PREDICATE)}</div> ,
                             <div className="certificate">
