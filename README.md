@@ -1,8 +1,8 @@
 # Verifiable Credentials with Solid and Blockchain
 
 A proposed system for Verifiable Credentials using [Solid](https://solidproject.org/) and Blockchain technology. 
-Solid for data storing, management and identity verification.
-Ethereum (as used Blockchain tech) for storing the data integrity of a credential.
+- Solid for data storing, management and identity verification.
+- Ethereum (as used Blockchain tech) for storing the data integrity of a credential.
 
 This project was created by [Wannes Dieltiens](https://wannes.xyz) under project guidance of Christophe Cop for [Konsolidate](https://www.konsolidate.eu/) during an internship.
 
