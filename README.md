@@ -47,7 +47,6 @@ Project is bootstrapped with React.
 - User-app , make quelist auto delete item when stored
 - Make apps also request and write app-access to the next app in the order (issuer needs to give perm to user-app, user needs to give perm to validation-app) 
 - Issuer stored a new thing in public eth address file for every certification created, should only by done once except if issuer uses a different eth address at some point
-- User-app gives an .map error at first time login because of no certif-owned folder found, although it does get created at this point. So a refresh makes it work.
 
 ##### To-do
 
