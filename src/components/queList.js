@@ -16,19 +16,14 @@ const SHA1_PREDICATE = "http://xmlns.com/foaf/0.1/sha1";
 
 
 function QueList({certifListStored, setCertifListStored, certifListQue, setCertifListQue, session}){
-    const queThings = certifListQue;
-    console.log(certifListStored)
-    const storedThings = certifListStored ? certifListStored : [];
-  
-    const storedThingsHashes = storedThings.map((thing) => {
-        return getStringNoLocale(thing, SHA1_PREDICATE);
-    })
-
     let certifThings = [];
 
     //try incase our que is empty, without the try an error will be given sometimes on empty que
-    try {
-        certifThings = queThings.filter((thing) => {
+    try { 
+        const storedThingsHashes = certifListStored.map((thing) => {
+            return getStringNoLocale(thing, SHA1_PREDICATE);
+        })
+        certifThings = certifListQue.filter((thing) => {
             if(true !== storedThingsHashes.includes(getStringNoLocale(thing, SHA1_PREDICATE)) ){
                 return thing;
             }
@@ -37,7 +32,6 @@ function QueList({certifListStored, setCertifListStored, certifListQue, setCerti
     } catch (error) {
         console.log("queList couldn't check certifs against webId")
     }
-    console.log("queList queThings", queThings )
 
     certifThings.sort((a, b) => {
         return (
