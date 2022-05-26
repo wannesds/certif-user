@@ -15,10 +15,13 @@ Any questions? Feel free to contact me at wannesdieltiens@gmail.com or on [Linke
 ## Demo
 
 [Issuer App repo](https://github.com/wannesds/certif-issuer)
+
 [User App repo](https://github.com/wannesds/certif-user)
+
 [Validator App repo](https://github.com/wannesds/certif-validator)
 
 Metamask plugin or a similar wallet provider with an ethereum account and Solid data-pods are required for testing out the applications.
+
 Do not try to test this without any experience with Ethereum.
 Ethereums Rinkeby test-network was used to build and test this project.
 
